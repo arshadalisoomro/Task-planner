@@ -1,6 +1,7 @@
 package pl.leszekluksza.taskplanner.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,11 +21,28 @@ public class Task {
     @OneToMany(mappedBy = "task")
     private Set<TaskComment> taskComments = new HashSet<>();
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    private Boolean isEnabled;
+
     public Task() {
+    }
+
+    public Task(String name, Set<TaskComment> taskComments, @NotNull User user) {
+        this.name = name;
+        this.taskComments = taskComments;
+        this.user = user;
+    }
+
+    public Boolean getEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
     }
 
     public Long getId() {
