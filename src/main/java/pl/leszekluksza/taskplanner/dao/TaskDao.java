@@ -31,4 +31,13 @@ public class TaskDao {
             return "Task does not exist";
         }
     }
+
+    public String edit(Task task, String id) {
+        if (task.getId().equals(id)) {
+            taskRepository.save(task);
+            return "edited";
+        } else {
+            return "task id is not corrected";
+        }
+    }
 }
