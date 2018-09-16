@@ -23,7 +23,10 @@ public class TaskRestController {
         return taskDao.finish(taskId);
     }
 
-
+    @PutMapping("/edit/{id}")
+    public String editTask(@ModelAttribute Task task, @PathVariable String id){
+        return taskDao.edit(task, id);
+    }
 
 
 }
