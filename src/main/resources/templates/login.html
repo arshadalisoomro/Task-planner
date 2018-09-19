@@ -9,31 +9,35 @@
 </head>
 <body>
 <div class="login-main-container">
+    <div th:if="${param.created}" class="alert alert-primary" role="alert">
+        <strong>Well done!</strong> Your account has been successfully created.
+    </div>
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+        <strong>Oops!</strong> Uncorrected login or password.
+    </div>
+
     <div class="row">
         <div class="col-md-10 offset-md-1">
             <div class="panel text-center">
                 <p th:if="${param.logout}">
-                    Wylogowałeś się.
+                    You have been successfully logged out.
                 </p>
-                <p class="login-error" th:if="${param.error}">
-                    <strong>Niepoprawny login lub hasło</strong>
-                </p>
-                <h2>Logowanie</h2>
-                <p>Wprowadź swój login i hasło aby się zalogować</p>
+                <h2>Login page</h2>
+                <p>Type your login and password to sign in</p>
             </div>
             <div class="cent">
             <form th:action="@{/login}" th:object="${user}" method="post">
                 <div class="form-group">
 
-                    <input type="text" th:field="*{username}" class="form-control login" placeholder="Nazwa użytkownika"/>
+                    <input type="text" th:field="*{username}" class="form-control login" placeholder="User name"/>
                 </div>
                 <div class="form-group">
-                    <input type="password" th:field="*{password}" class="form-control password" placeholder="Hasło"/>
+                    <input type="password" th:field="*{password}" class="form-control password" placeholder="Password"/>
                 </div>
                 <div class="form-group">
-                    <a class="text-muted" href="/register">Nie masz konta? Zarejestruj się</a>
+                    <a class="text-muted" href="/register">Haven't got account yet? Register account</a>
                 </div>
-                <input class="btn submit-button" type="submit" value="Zaloguj się"/>
+                <input class="btn submit-button" type="submit" value="Sign in"/>
             </form>
         </div>
     </div>
