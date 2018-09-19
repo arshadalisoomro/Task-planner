@@ -7,12 +7,26 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
+    <div th:if="${param.added}" class="alert alert-primary" role="alert">
+        <strong>Well done!</strong> Category has been successfully created.
+    </div>
     <div class="row">
         <div class="col-md-4 col-lg-3 col-sm-6">
             <form method="post" th:object="${fullTask}" th:action="@{/form}">
                 <input class="form-control" type="text" th:field="*{name}" placeholder="name"/>
-                <input class="form-control" type="text" th:field="*{categoryName}" placeholder="category name"/>
+
+                <select th:field="*{category}">
+                    <option th:each="singleCategory : ${fullTask.getCategories()}"
+                            th:value="${singleCategory.getName()}" th:text="${singleCategory.getName()}"></option>
+                </select>
+
                 <input class="form-control" type="text" th:field="*{comment}" placeholder="comment"/>
+                <input type="submit" value="submit"/>
+            </form>
+        </div>
+        <div class="col-md-4 col-lg-3 col-sm-6">
+            <form method="post" action="" th:object="${category}" th:action="@{/AddCategory}">
+                <input class="form-control" type="text" th:field="*{name}" placeholder="name"/>
                 <input type="submit" value="submit"/>
             </form>
         </div>
