@@ -21,7 +21,7 @@ public class Task {
     @OneToMany(mappedBy = "task")
     private Set<TaskComment> taskComments = new HashSet<>();
 
-    @NotNull
+//    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
