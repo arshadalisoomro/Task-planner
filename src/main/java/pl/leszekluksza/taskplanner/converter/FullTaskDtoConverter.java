@@ -21,20 +21,18 @@ public class FullTaskDtoConverter {
     TaskRepository taskRepository;
 
     @Autowired
-    CategoryRepository categoryRepository;
-
-    @Autowired
     TaskCommentRepository taskCommentRepository;
 
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
 
     public String convertAndSave(FullTaskDto fullTaskDto, Principal principal){
         User user = userDao.findUserByPrincipal(principal);
-
-        Category category = new Category();
-        category.setName(fullTaskDto.getCategoryName());
+        Category category = categoryRepository.findByUserIdAndName(user.getId(),fullTaskDto.getCategory());
 
         Task task = new Task();
         task.setName(fullTaskDto.getName());
@@ -46,7 +44,6 @@ public class FullTaskDtoConverter {
         taskComment.setComment(fullTaskDto.getComment());
         taskComment.setTask(task);
 
-        categoryRepository.save(category);
         taskRepository.save(task);
         taskCommentRepository.save(taskComment);
 
