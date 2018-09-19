@@ -8,14 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.leszekluksza.taskplanner.converter.FullTaskDtoConverter;
+import pl.leszekluksza.taskplanner.dao.CategoryDao;
+import pl.leszekluksza.taskplanner.dao.UserDao;
 import pl.leszekluksza.taskplanner.dto.FullTaskDto;
+import pl.leszekluksza.taskplanner.model.Category;
 import pl.leszekluksza.taskplanner.model.Task;
 import pl.leszekluksza.taskplanner.model.User;
+import pl.leszekluksza.taskplanner.repository.CategoryRepository;
 import pl.leszekluksza.taskplanner.repository.TaskRepository;
 import pl.leszekluksza.taskplanner.repository.UserRepository;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class HomeController {
@@ -32,6 +37,15 @@ public class HomeController {
     @Autowired
     TaskRepository taskRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
+    @Autowired
+    UserDao userDao;
+
+    @Autowired
+    CategoryDao categoryDao;
+
     @GetMapping("index")
     public String index(Model model, Principal principal) {
 //        List<Task> tasks = taskRepository.findAll();
@@ -43,8 +57,19 @@ public class HomeController {
 
     @GetMapping("form")
     public String form(Model model, Principal principal) {
-        model.addAttribute("fullTask", new FullTaskDto());
+        FullTaskDto fullTask = new FullTaskDto();
+        User user = userDao.findUserByPrincipal(principal);
+        Set<Category> categories = categoryRepository.findByUserId(user.getId());
+        fullTask.setCategories(categories);
+        model.addAttribute("fullTask", fullTask);
+        model.addAttribute("category", new Category());
         return "form";
+    }
+
+    @PostMapping("/AddCategory")
+    public String addCategory(@ModelAttribute Category category, Principal principal){
+        categoryDao.SaveCategory(category,principal);
+        return "redirect:/form?added";
     }
 
     @PostMapping("form")
