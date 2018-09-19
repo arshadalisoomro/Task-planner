@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import pl.leszekluksza.taskplanner.model.User;
 import pl.leszekluksza.taskplanner.repository.UserRepository;
 
+import java.security.Principal;
+
 @Component
 public class UserDao {
 
@@ -14,5 +16,10 @@ public class UserDao {
     public String register(String login, String password){
         userRepository.save(new User(login,password));
         return "saved";
+    }
+
+    public User findUserByPrincipal(Principal principal){
+        User user = userRepository.findByUsername(principal.getName());
+        return user;
     }
 }
