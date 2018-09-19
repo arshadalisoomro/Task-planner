@@ -1,8 +1,14 @@
 package pl.leszekluksza.taskplanner.dto;
 
+import pl.leszekluksza.taskplanner.model.Category;
+
+import java.util.List;
+import java.util.Set;
+
 public class FullTaskDto {
     private String name;
-    private String categoryName;
+    private Set<Category> categories;
+    private String category;
     private String comment;
 
     public FullTaskDto() {
@@ -16,19 +22,27 @@ public class FullTaskDto {
         this.name = name;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
