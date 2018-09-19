@@ -25,7 +25,7 @@ public class FullTaskDtoConverter {
     public String convertAndSave(FullTaskDto fullTaskDto){
         System.out.println("im");
         Category category = new Category();
-        category.setName(fullTaskDto.getName());
+        category.setName(fullTaskDto.getCategoryName());
 
         Task task = new Task();
         task.setName(fullTaskDto.getName());
