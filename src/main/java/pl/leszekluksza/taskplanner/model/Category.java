@@ -16,6 +16,10 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private Set<Task> tasks = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Category() {
     }
 
@@ -41,5 +45,13 @@ public class Category {
 
     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
