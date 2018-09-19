@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-md-6 text-center" th:text="${task.getName()}">
                 </div>
-                <div class="col-md-6 text-center" th:text="${task.getCategory().getName()}">
+                <div class="col-md-6 text-center" th:if="${task.getCategory()!=null}" th:text="${task.getCategory().getName()}">
                 </div>
             </div>
             <div style="overflow:scroll; height:400px">
