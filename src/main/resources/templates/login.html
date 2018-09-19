@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Logowanie </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<div class="login-main-container">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="panel text-center">
+                <p th:if="${param.logout}">
+                    Wylogowałeś się.
+                </p>
+                <p class="login-error" th:if="${param.error}">
+                    <strong>Niepoprawny login lub hasło</strong>
+                </p>
+                <h2>Logowanie</h2>
+                <p>Wprowadź swój login i hasło aby się zalogować</p>
+            </div>
+            <div class="cent">
+            <form th:action="@{/login}" th:object="${user}" method="post">
+                <div class="form-group">
+
+                    <input type="text" th:field="*{username}" class="form-control login" placeholder="Nazwa użytkownika"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" th:field="*{password}" class="form-control password" placeholder="Hasło"/>
+                </div>
+                <div class="form-group">
+                    <a class="text-muted" href="/register">Nie masz konta? Zarejestruj się</a>
+                </div>
+                <input class="btn submit-button" type="submit" value="Zaloguj się"/>
+            </form>
+        </div>
+    </div>
+    </div>
+</div>
+</body>
+</html>
