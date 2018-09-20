@@ -10,24 +10,63 @@
     <div th:if="${param.added}" class="alert alert-primary" role="alert">
         <strong>Well done!</strong> Category has been successfully created.
     </div>
-    <div class="row">
-        <div class="col-md-4 col-lg-3 col-sm-6">
-            <form method="post" th:object="${fullTask}" th:action="@{/form}">
-                <input class="form-control" type="text" th:field="*{name}" placeholder="name"/>
-
-                <select th:field="*{category}">
-                    <option th:each="singleCategory : ${fullTask.getCategories()}"
-                            th:value="${singleCategory.getName()}" th:text="${singleCategory.getName()}"></option>
-                </select>
-
-                <input class="form-control" type="text" th:field="*{comment}" placeholder="comment"/>
-                <input type="submit" value="submit"/>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/index">TaskPlanner</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto ">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/form">Add Task/Category <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
-        <div class="col-md-4 col-lg-3 col-sm-6">
+    </nav>
+    <div class="row">
+        <div class="col-md-4 col-sm-6 border offset-md-1 p-5 mt-5">
+            <div class="text-center">
+                <h2>Add Task</h2>
+            </div>
+            <form method="post" th:object="${fullTask}" th:action="@{/form}">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" type="text" th:field="*{name}" placeholder="Name"/>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select th:field="*{category}" class="form-control">
+                            <option value="select">None</option>
+                            <option th:each="singleCategory : ${fullTask.getCategories()}"
+                                    th:value="${singleCategory.getName()}" th:text="${singleCategory.getName()}"></option>
+                        </select>
+                        <small class="form-text text-muted">Choose category. You can add the category on the right section</small>
+                </div>
+                <div class="form-group">
+                    <label>Comment</label>
+                    <input class="form-control" type="text" th:field="*{comment}" placeholder="Comment your Task"/>
+
+                </div>
+                <input class="btn btn-primary" type="submit" value="Add Task"/>
+            </form>
+        </div>
+        <div class="col-md-4 col-sm-6 border offset-md-1 p-5 mt-5">
+            <div class="text-center">
+                <h2>Add Category</h2>
+            </div>
             <form method="post" action="" th:object="${category}" th:action="@{/AddCategory}">
-                <input class="form-control" type="text" th:field="*{name}" placeholder="name"/>
-                <input type="submit" value="submit"/>
+                <div class="form-group">
+                    <label>Category name</label>
+                    <input class="form-control" type="text" th:field="*{name}" placeholder="Enter category name"/>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Add Category"/>
             </form>
         </div>
     </div>
