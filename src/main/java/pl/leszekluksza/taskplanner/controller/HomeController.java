@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.leszekluksza.taskplanner.converter.FullTaskDtoConverter;
 import pl.leszekluksza.taskplanner.dao.CategoryDao;
+import pl.leszekluksza.taskplanner.dao.TaskDao;
 import pl.leszekluksza.taskplanner.dao.UserDao;
 import pl.leszekluksza.taskplanner.dto.FullTaskDto;
 import pl.leszekluksza.taskplanner.model.Category;
@@ -48,11 +49,17 @@ public class HomeController {
     @Autowired
     CategoryDao categoryDao;
 
+    @Autowired
+    TaskDao taskDao;
+
+    @GetMapping("/")
+    public String redirectToIndexPage(){
+        return "redirect:/index";
+    }
+
     @GetMapping("index")
     public String index(Model model, Principal principal) {
-//        List<Task> tasks = taskRepository.findAll();
-        User user = userRepository.findByUsername(principal.getName());
-        List<Task> tasks = taskRepository.findAllByUserId(user.getId());
+       List<Task> tasks = taskDao.findTasksByPrincipal(principal);
         model.addAttribute("tasks",tasks);
         return "index";
     }
@@ -77,8 +84,7 @@ public class HomeController {
     @PostMapping("form")
     public String postForm(@ModelAttribute FullTaskDto fullTaskDto, Principal principal)
     {
-        System.out.println("im in post form");
-        if(fullTaskDtoConverter.convertAndSave(fullTaskDto,principal).equals("ok")){
+        if(fullTaskDtoConverter.convertAndSave(fullTaskDto,principal)){
             return "redirect:index";
         }
         else {

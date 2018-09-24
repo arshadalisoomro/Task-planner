@@ -5,15 +5,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import pl.leszekluksza.taskplanner.model.Task;
+import pl.leszekluksza.taskplanner.model.User;
 import pl.leszekluksza.taskplanner.repository.TaskRepository;
+import pl.leszekluksza.taskplanner.repository.UserRepository;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class TaskDao {
 
     @Autowired
     TaskRepository taskRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     public ResponseEntity<String> add(Task task) {
         taskRepository.save(new Task());
@@ -41,5 +49,11 @@ public class TaskDao {
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+    }
+
+    public List<Task> findTasksByPrincipal(Principal principal){
+        User user = userRepository.findByUsername(principal.getName());
+        List<Task> tasks = taskRepository.findAllByUserId(user.getId());
+        return tasks.stream().filter(Task::getEnabled).collect(Collectors.toList());
     }
 }
