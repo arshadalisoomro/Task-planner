@@ -30,24 +30,28 @@ public class FullTaskDtoConverter {
     CategoryRepository categoryRepository;
 
 
-    public String convertAndSave(FullTaskDto fullTaskDto, Principal principal){
-        User user = userDao.findUserByPrincipal(principal);
-        Category category = categoryRepository.findByUserIdAndName(user.getId(),fullTaskDto.getCategory());
+    public Boolean convertAndSave(FullTaskDto fullTaskDto, Principal principal){
+        try {
+            User user = userDao.findUserByPrincipal(principal);
+            Category category = categoryRepository.findByUserIdAndName(user.getId(),fullTaskDto.getCategory());
 
-        Task task = new Task();
-        task.setName(fullTaskDto.getName());
-        task.setEnabled(true);
-        task.setCategory(category);
-        task.setUser(user);
+            Task task = new Task();
+            task.setName(fullTaskDto.getName());
+            task.setEnabled(true);
+            task.setCategory(category);
+            task.setUser(user);
 
-        TaskComment taskComment = new TaskComment();
-        taskComment.setComment(fullTaskDto.getComment());
-        taskComment.setTask(task);
+            TaskComment taskComment = new TaskComment();
+            taskComment.setComment(fullTaskDto.getComment());
+            taskComment.setTask(task);
 
-        taskRepository.save(task);
-        taskCommentRepository.save(taskComment);
+            taskRepository.save(task);
+            taskCommentRepository.save(taskComment);
 
-        return "ok";
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
