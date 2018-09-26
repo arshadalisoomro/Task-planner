@@ -12,15 +12,14 @@ public class TaskCommentDao {
     @Autowired
     UserDao userDao;
 
+    public Boolean checkIfTaskIdIsConnectedWithPrincipalAndEnabled(Principal principal, String taskId){
+        User user = userDao.findUserByPrincipal(principal);
+        return user.getTasks().stream().anyMatch(x->x.getId().equals(Long.valueOf(taskId))&&x.getEnabled());
+    }
+
     public String checkTaskIdAndPrincipalAndReturnAddNotePageOrRedirect
             (String taskId, Principal principal) {
-        User user = userDao.findUserByPrincipal(principal);
-        if(user==null){
-            return "redirect:/index";
-        }
-        if(user.getTasks().stream().anyMatch(x->x.getId().equals(Long.valueOf(taskId))&&x.getEnabled())){
-            return "addComment";
-        }
-        return "redirect:/index";
+            return checkIfTaskIdIsConnectedWithPrincipalAndEnabled(principal,taskId) ? "addComment" : "redirect:/index" ;
+
     }
 }
