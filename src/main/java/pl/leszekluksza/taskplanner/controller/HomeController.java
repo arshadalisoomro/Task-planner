@@ -29,9 +29,6 @@ import java.util.Set;
 public class HomeController {
 
     @Autowired
-    FullTaskDtoConverter fullTaskDtoConverter;
-
-    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -64,16 +61,7 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("form")
-    public String form(Model model, Principal principal) {
-        FullTaskDto fullTask = new FullTaskDto();
-        User user = userDao.findUserByPrincipal(principal);
-        Set<Category> categories = categoryRepository.findByUserId(user.getId());
-        fullTask.setCategories(categories);
-        model.addAttribute("fullTask", fullTask);
-        model.addAttribute("category", new Category());
-        return "form";
-    }
+
 
     @PostMapping("/AddCategory")
     public String addCategory(@ModelAttribute Category category, Principal principal){
@@ -81,16 +69,7 @@ public class HomeController {
         return "redirect:/form?added";
     }
 
-    @PostMapping("form")
-    public String postForm(@ModelAttribute FullTaskDto fullTaskDto, Principal principal)
-    {
-        if(fullTaskDtoConverter.convertAndSave(fullTaskDto,principal)){
-            return "redirect:index";
-        }
-        else {
-            return "redirect:form?error";
-        }
-    }
+
 
     @GetMapping("/login")
     public String getLoginForm(Model model){
