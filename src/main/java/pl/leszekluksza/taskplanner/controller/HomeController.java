@@ -61,11 +61,6 @@ public class HomeController {
         return "index";
     }
 
-    @PostMapping("/AddCategory")
-    public String addCategory(@ModelAttribute @Valid Category category, Principal principal, BindingResult bindingResult){
-        return categoryDao.SaveCategoryAndRedirectToForm(category,principal,bindingResult);
-    }
-
     @GetMapping("/login")
     public String getLoginForm(Model model){
         model.addAttribute("user",new User());
