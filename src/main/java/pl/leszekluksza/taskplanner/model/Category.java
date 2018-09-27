@@ -1,6 +1,8 @@
 package pl.leszekluksza.taskplanner.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 3)
     private String name;
 
     @OneToMany(mappedBy = "category")
