@@ -32,10 +32,10 @@
 <div class="row">
     <div class="col-md-4 col-lg-4 col-sm-6 col-xl-3 mt-3 mb-4" th:each="task: ${tasks}">
         <div class="ml-ml-1 mr-mr-1 p-10 border" style="background-color: #e0e2e5">
-            <div class="row mb-2">
-                <div class="col-md-6 text-left"><strong th:text="${task.getName()}" class="ml-3"></strong>
+            <div class="row mb-2 mt-2">
+                <div class="col-md-6 text-left"><strong th:text="${'Title: '+ task.getName()}" class="ml-3"></strong>
                 </div>
-                <div class="col-md-6 text-right" th:if="${task.getCategory()!=null}"><strong th:text="${task.getCategory().getName()}" class="mr-3"></strong>
+                <div class="col-md-6 text-right" th:if="${task.getCategory()!=null}"><strong th:text="${'Category: ' + task.getCategory().getName()}" class="mr-3"></strong>
                 </div>
             </div>
             <div class="ml-3 mr-1" style="overflow-y:scroll; overflow-x: hidden; max-height:400px">
@@ -44,27 +44,47 @@
                         <label style="width: 100%">
                         <textarea class="form-control notes" th:text="${comment.getComment()}"></textarea>
                     </label>
-                    <!--<div class="row mb-3">-->
-                        <!--<div class="col col-sm-6">-->
-                            <!--<button type="button" class="btn btn-secondary btn-sm btn-block">edit</button>-->
-                        <!--</div>-->
-                        <!--<div class="col col-sm-6">-->
-                            <!--<button type="button" class="btn btn-dark btn-sm btn-block">delete</button>-->
-                        <!--</div>-->
-                    <!--</div>-->
                     </span>
                 </div>
             </div>
-            <div class="p-2 pl-3">
-                <span><i class="fa fa-plus"></i> Add new note</span>
+            <div class="row">
+            <div class="col-md-6 text-left pt-3">
+                <a th:href="${'/AddNote?taskId=' + task.getId()}" ><span class="pl-3"><i class="fa fa-plus"></i> Add new note</span></a>
             </div>
+            <div class="col-md-6 text-right pt-3">
+                <span th:id="${'finishTask' + task.getId()}" class="pr-3 text-danger finishTask"><i class="fa fa-minus-square"></i> Finish Task</span>
+            </div>
+            </div>
+            <!--<div class="p-2 pl-3 float-left">-->
+            <!--</div>-->
 </div>
 </div>
 </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<style>
+    .finishTask:hover{
+        text-decoration: underline;
+    }
+</style>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script>
+    $( document ).ready()
+    {
+        $(".finishTask").on('click', function () {
+            let taskId = this.id.substr(10);
+            $.post("/api/Task/Finish", {taskId:taskId})
+                .done(function () {
+                    window.location.href = "/index";
+                })
+        })
+
+    }
+
+</script>
 </body>
 </html>
