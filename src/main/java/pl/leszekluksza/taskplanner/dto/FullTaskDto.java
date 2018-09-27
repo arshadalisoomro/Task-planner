@@ -2,10 +2,13 @@ package pl.leszekluksza.taskplanner.dto;
 
 import pl.leszekluksza.taskplanner.model.Category;
 
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Set;
 
 public class FullTaskDto {
+
+    @Size(min = 3)
     private String name;
     private Set<Category> categories;
     private String category;
