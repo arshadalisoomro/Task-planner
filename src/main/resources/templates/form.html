@@ -38,7 +38,7 @@
             <form method="post" th:object="${fullTask}" th:action="@{/form}">
                 <div class="form-group">
                     <label>Name</label>
-                    <input class="form-control" type="text" th:field="*{name}" placeholder="Name"/>
+                    <input class="form-control" minlength="3" type="text" th:field="*{name}" placeholder="Name"/>
                 </div>
                 <div class="form-group">
                     <label>Category</label>
