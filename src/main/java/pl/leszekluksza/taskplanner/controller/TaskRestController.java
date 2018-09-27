@@ -18,13 +18,13 @@ public class TaskRestController {
         return taskDao.add(task);
     }
 
-    @PostMapping("/finish")
+    @PostMapping("/Finish")
     public ResponseEntity<String> finishTask(@RequestParam String taskId)
     {
         return taskDao.finish(taskId);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/Edit/{id}")
     public ResponseEntity<String> editTask(@ModelAttribute Task task, @PathVariable String id){
         return taskDao.edit(task, id);
     }
