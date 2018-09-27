@@ -36,7 +36,7 @@
         <form method="post" th:object="${taskCommentDto}" th:action="@{/AddNote}">
             <div class="form-group">
                 <label>Name</label>
-                <input class="form-control" type="text" minlength="3" th:field="*{comment}" placeholder="Name"/>
+                <input class="form-control" type="text" minlength=3 th:field="*{comment}" placeholder="Name"/>
             </div>
             <input type="hidden" id="taskId" th:field="*{taskId}" placeholder="Comment your Task"/>
             <input class="btn btn-primary" type="submit" value="Add Task"/>
