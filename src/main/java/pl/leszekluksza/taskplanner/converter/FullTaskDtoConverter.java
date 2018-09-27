@@ -3,6 +3,7 @@ package pl.leszekluksza.taskplanner.converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import pl.leszekluksza.taskplanner.dao.UserDao;
 import pl.leszekluksza.taskplanner.dto.FullTaskDto;
 import pl.leszekluksza.taskplanner.model.Category;
@@ -30,8 +31,12 @@ public class FullTaskDtoConverter {
     CategoryRepository categoryRepository;
 
 
-    public Boolean convertAndSave(FullTaskDto fullTaskDto, Principal principal){
+    public Boolean convertAndSave(FullTaskDto fullTaskDto, Principal principal, BindingResult bindingResult){
         try {
+            if(bindingResult.hasErrors()){
+                return false;
+            }
+
             User user = userDao.findUserByPrincipal(principal);
             Category category = categoryRepository.findByUserIdAndName(user.getId(),fullTaskDto.getCategory());
 
@@ -54,7 +59,7 @@ public class FullTaskDtoConverter {
         }
     }
 
-
-
-
-}
+    public String convertAndSaveAndReturnIndex(FullTaskDto fullTaskDto, Principal principal, BindingResult bindingResult) {
+        return convertAndSave(fullTaskDto, principal, bindingResult) ? "redirect:/index?success=addTask" : "redirect:/index?success=addTask";
+        }
+    }
