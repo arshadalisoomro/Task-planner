@@ -64,7 +64,7 @@
             <form method="post" action="" th:object="${category}" th:action="@{/AddCategory}">
                 <div class="form-group">
                     <label>Category name</label>
-                    <input class="form-control" type="text" th:field="*{name}" placeholder="Enter category name"/>
+                    <input class="form-control" minlength="3" type="text" th:field="*{name}" placeholder="Enter category name"/>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Add Category"/>
             </form>
