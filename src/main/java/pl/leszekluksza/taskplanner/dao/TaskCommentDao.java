@@ -2,6 +2,8 @@ package pl.leszekluksza.taskplanner.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
+import pl.leszekluksza.taskplanner.dto.TaskCommentDto;
 import pl.leszekluksza.taskplanner.model.User;
 
 import java.security.Principal;
@@ -20,6 +22,5 @@ public class TaskCommentDao {
     public String checkTaskIdAndPrincipalAndReturnAddNotePageOrRedirect
             (String taskId, Principal principal) {
             return checkIfTaskIdIsConnectedWithPrincipalAndEnabled(principal,taskId) ? "addComment" : "redirect:/index" ;
-
     }
 }

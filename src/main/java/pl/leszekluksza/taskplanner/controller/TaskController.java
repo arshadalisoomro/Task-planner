@@ -42,11 +42,6 @@ public class TaskController {
     @PostMapping("form")
     public String postForm(@ModelAttribute FullTaskDto fullTaskDto, Principal principal)
     {
-        if(fullTaskDtoConverter.convertAndSave(fullTaskDto,principal)){
-            return "redirect:index";
-        }
-        else {
-            return "redirect:form?error";
-        }
+        return fullTaskDtoConverter.convertAndSaveAndReturnIndex(fullTaskDto,principal);
     }
 }
