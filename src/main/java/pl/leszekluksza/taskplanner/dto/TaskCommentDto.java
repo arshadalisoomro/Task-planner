@@ -1,7 +1,14 @@
 package pl.leszekluksza.taskplanner.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class TaskCommentDto {
+
+    @Size(min = 3)
     private String name;
+    
+    @NotNull
     private String taskId;
 
     public TaskCommentDto() {
