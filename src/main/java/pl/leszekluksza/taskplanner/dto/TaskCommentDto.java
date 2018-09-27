@@ -6,8 +6,8 @@ import javax.validation.constraints.Size;
 public class TaskCommentDto {
 
     @Size(min = 3)
-    private String name;
-    
+    private String comment;
+
     @NotNull
     private String taskId;
 
@@ -15,16 +15,16 @@ public class TaskCommentDto {
     }
 
     public TaskCommentDto(String name, String taskId) {
-        this.name = name;
+        this.comment = name;
         this.taskId = taskId;
     }
 
-    public String getName() {
-        return name;
+    public String getComment() {
+        return comment;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public String getTaskId() {
