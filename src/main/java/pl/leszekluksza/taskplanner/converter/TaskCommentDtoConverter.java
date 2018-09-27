@@ -29,7 +29,7 @@ public class TaskCommentDtoConverter {
 
     public String validateConvertSaveAndReturnIndex(TaskCommentDto taskCommentDto, Principal principal, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            return "/index?error=addNote";
+            return "redirect:/index?error=addNote";
         }
         try {
             User user = userDao.findUserByPrincipal(principal);
@@ -40,11 +40,11 @@ public class TaskCommentDtoConverter {
                 taskComment.setTask(task);
                 taskComment.setComment(taskCommentDto.getComment());
                 taskCommentRepository.save(taskComment);
-                return "/index?success=addNote";
+                return "redirect:/index?success=addNote";
             }
         } catch (NumberFormatException e) {
-            return "/index?error=addNote";
+            return "redirect:/index?error=addNote";
         }
-        return "/index?error=addNote";
+        return "redirect:/index?error=addNote";
     }
 }
